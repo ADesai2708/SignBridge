@@ -12,6 +12,23 @@ class MediaPipeLandmarkExtractor:
             max_num_hands=1,
             min_detection_confidence=0.5
         )
+    def normalize_landmarks(self, hand):
+        """
+        Normalize landmarks relative to the wrist.
+        """
+
+        wrist = hand.landmark[0]
+
+        features = []
+
+        for landmark in hand.landmark:
+            x = landmark.x - wrist.x
+            y = landmark.y - wrist.y
+            z = landmark.z - wrist.z
+
+            features.extend([x, y, z])
+
+        return np.array(features, dtype=np.float32)
 
     def extract(self, image):
 

@@ -4,15 +4,35 @@ venv/
 # Python cache
 __pycache__/
 *.py[cod]
+.ipynb_checkpoints/
 
 # Environment variables
 .env
 
-# VS Code
+# IDEs
 .vscode/
-
-# JetBrains IDEs
 .idea/
 
-# macOS
+# OS files
 .DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Python build artifacts
+build/
+dist/
+*.egg-info/
+
+# Testing
+.pytest_cache/
+.coverage
+
+# Jupyter
+*.ipynb
+
+# Model checkpoints (optional)
+*.h5
+*.pt
+*.pth
