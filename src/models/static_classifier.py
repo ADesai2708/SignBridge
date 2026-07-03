@@ -34,6 +34,7 @@ class StaticSignClassifier:
         return self.encoder.inverse_transform(pred)
 
     def predict_proba(self, X):
+        X = np.asarray(X).reshape(1, -1)
 
         probs = self.model.predict_proba(X)
 
@@ -42,13 +43,16 @@ class StaticSignClassifier:
         results = []
 
         for idx in top3:
-
             results.append({
                 "label": self.encoder.classes_[idx],
                 "confidence": float(probs[0][idx])
             })
 
         return results
+
+    # Added for compatibility with predict_live.py
+    def predict_top3(self, X):
+        return self.predict_proba(X)
 
     def save(self, path):
 
@@ -67,10 +71,10 @@ class StaticSignClassifier:
         self.model = data["model"]
         self.encoder = data["encoder"]
 
-    def predict_single(self, features):
-        features = np.array(features).reshape(1, -1)
+    def predict(self, X):
 
-        prediction = self.predict(features)[0]
-        confidence = max(self.model.predict_proba(features)[0])
+        X = np.asarray(X).reshape(1, -1)
 
-        return prediction, confidence
+        pred = self.model.predict(X)
+
+        return self.encoder.inverse_transform(pred)
